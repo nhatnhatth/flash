@@ -70,6 +70,14 @@ class MainActivity : AppCompatActivity() {
             VibarateFlashThread(this, VibarateFlashThread.FLASH_MODE, 100, 0).start()
 
         }
+        binding.btn11.setOnClickListener {
+            VibarateFlashThread.stopAll()
+            cameraId?.let { manager.setTorchMode(it, false) }
+        }
+        binding.btn12.setOnClickListener {
+            VibarateFlashThread.stopAll()
+            vibrator.vibrate(0)
+        }
     }
 
     private fun stopThread() {

@@ -11,6 +11,10 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
 
 
     companion object {
+        fun stopAll() {
+            isRunning = false
+        }
+
         const val VIBRATE_MODE = 124
         const val FLASH_MODE = 126
         var isRunning = false
@@ -43,18 +47,23 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
             for (i in 0 until durationSum / duration) {
                 cameraId?.let { manager.setTorchMode(it, true) }
                 if (!startSleep(duration)) {
+                    cameraId?.let { manager.setTorchMode(it, false) }
                     return
                 }
                 cameraId?.let { manager.setTorchMode(it, false) }
                 if (!startSleep(duration)) {
+                    cameraId?.let { manager.setTorchMode(it, false) }
                     return
                 }
             }
         } catch (e: CameraAccessException) {
             e.printStackTrace()
+            cameraId?.let { manager.setTorchMode(it, false) }
         } catch (e: InterruptedException) {
+            cameraId?.let { manager.setTorchMode(it, false) }
             throw RuntimeException(e)
         }
+        cameraId?.let { manager.setTorchMode(it, false) }
     }
 
     private fun vibrate() {

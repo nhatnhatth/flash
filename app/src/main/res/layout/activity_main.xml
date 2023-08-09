@@ -43,27 +43,37 @@
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_6"
-        android:text="6"
+        android:text="Strong vibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_7"
-        android:text="7"
+        android:text="Heart Vibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_8"
-        android:text="8"
+        android:text="tic toc Vibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_9"
-        android:text="9"
+        android:text="SOS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_10"
-        android:text="10"
+        android:text="Disco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_11"
+        android:text="Turn off flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_12"
+        android:text="turn off Vibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
