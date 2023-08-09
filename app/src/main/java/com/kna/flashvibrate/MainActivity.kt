@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             vibrate(1000, 100)
         }
         binding.btn6.setOnClickListener {
-            VibarateFlashThread(this, VibarateFlashThread.VIBRATE_MODE, 1500, 0).start()
+            VibarateFlashThread(this, VibarateFlashThread.VIBRATE_MODE, 6000, 0).start()
         }
         binding.btn7.setOnClickListener {
             VibarateFlashThread(this, VibarateFlashThread.VIBRATE_MODE, 150, 700).start()
@@ -71,10 +71,17 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.btn11.setOnClickListener {
-            VibarateFlashThread.stopAll()
+            VibarateFlashThread.stopFlash()
             cameraId?.let { manager.setTorchMode(it, false) }
         }
         binding.btn12.setOnClickListener {
+            VibarateFlashThread.stopVibrate()
+        }
+        binding.btn13.setOnClickListener {
+            VibarateFlashThread(this, VibarateFlashThread.VIBRATE_MODE, 6000, 0).start()
+            VibarateFlashThread(this, VibarateFlashThread.FLASH_MODE, 600, 0).start()
+        }
+        binding.btn14.setOnClickListener {
             VibarateFlashThread.stopAll()
             vibrator.vibrate(0)
         }
