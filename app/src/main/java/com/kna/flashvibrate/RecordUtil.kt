@@ -13,7 +13,6 @@ object RecordUtil {
 
     private fun startRecording(outputPath: String) {
         stopRecording()
-        // Configure media recorder settings
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         mediaRecorder.setOutputFile(outputPath)
