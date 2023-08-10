@@ -19,28 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        when (appPreferences.currentFlash) {
-            MODE_FLASH_1 -> {
-                binding.tvFlash.text = "SOS"
-            }
-
-            MODE_FLASH_2 -> {
-                binding.tvFlash.text = "DISCO"
-            }
-        }
-        when (appPreferences.currentVibrate) {
-            MODE_VIBRATE_1 -> {
-                binding.tvVibrate.text = "Strong"
-            }
-
-            MODE_VIBRATE_2 -> {
-                binding.tvVibrate.text = "Heart"
-            }
-
-            MODE_VIBRATE_3 -> {
-                binding.tvVibrate.text = "TickTok"
-            }
-        }
+        autoText()
 
 
         binding.btn1.setOnClickListener {
@@ -67,30 +46,25 @@ class MainActivity : AppCompatActivity() {
         binding.btn5.setOnClickListener {
         }
         binding.btn6.setOnClickListener {
-            appPreferences.currentVibrate = MODE_VIBRATE_1
             binding.tvVibrate.text = "Strong"
-            VibrateFlashThread(this, VibrateFlashThread.VIBRATE_MODE, 6000, 0).start()
+            VibrateFlashThread(this, MODE_VIBRATE_1).start()
         }
         binding.btn7.setOnClickListener {
-            appPreferences.currentVibrate = MODE_VIBRATE_2
             binding.tvVibrate.text = "heart"
-            VibrateFlashThread(this, VibrateFlashThread.VIBRATE_MODE, 150, 700).start()
+            VibrateFlashThread(this, MODE_VIBRATE_2).start()
 
         }
         binding.btn8.setOnClickListener {
-            appPreferences.currentVibrate = MODE_VIBRATE_3
             binding.tvVibrate.text = "tick_toc"
-            VibrateFlashThread(this, VibrateFlashThread.VIBRATE_MODE, 100, 1000).start()
+            VibrateFlashThread(this, MODE_VIBRATE_3).start()
         }
         binding.btn9.setOnClickListener {
-            appPreferences.currentFlash = MODE_FLASH_1
             binding.tvFlash.text = "SOS"
-            VibrateFlashThread(this, VibrateFlashThread.FLASH_MODE, 600, 0).start()
+            VibrateFlashThread(this, MODE_FLASH_1).start()
         }
         binding.btn10.setOnClickListener {
-            appPreferences.currentFlash = MODE_FLASH_2
             binding.tvFlash.text = "DISCO"
-            VibrateFlashThread(this, VibrateFlashThread.FLASH_MODE, 100, 0).start()
+            VibrateFlashThread(this, MODE_FLASH_2).start()
 
         }
         binding.btn11.setOnClickListener {
@@ -100,32 +74,38 @@ class MainActivity : AppCompatActivity() {
             VibrateFlashThread.stopVibrate()
         }
         binding.btn13.setOnClickListener {
-            when (appPreferences.currentFlash) {
-                MODE_FLASH_1 -> {
-                    VibrateFlashThread(this, VibrateFlashThread.FLASH_MODE, 600, 0).start()
-                }
-
-                MODE_FLASH_2 -> {
-                    VibrateFlashThread(this, VibrateFlashThread.FLASH_MODE, 100, 0).start()
-                }
-            }
-            when (appPreferences.currentVibrate) {
-                MODE_VIBRATE_1 -> {
-                    VibrateFlashThread(this, VibrateFlashThread.VIBRATE_MODE, 6000, 0).start()
-                }
-
-                MODE_VIBRATE_2 -> {
-                    VibrateFlashThread(this, VibrateFlashThread.VIBRATE_MODE, 150, 700).start()
-                }
-
-                MODE_VIBRATE_3 -> {
-                    VibrateFlashThread(this, VibrateFlashThread.VIBRATE_MODE, 100, 1000).start()
-                }
-            }
+            VibrateFlashThread(this, appPreferences.currentFlash).start()
+            VibrateFlashThread(this, appPreferences.currentVibrate).start()
         }
         binding.btn14.setOnClickListener {
             VibrateFlashThread.stopAll()
         }
+    }
+
+    private fun autoText() {
+        when (appPreferences.currentFlash) {
+            MODE_FLASH_1 -> {
+                binding.tvFlash.text = "SOS"
+            }
+
+            MODE_FLASH_2 -> {
+                binding.tvFlash.text = "DISCO"
+            }
+        }
+        when (appPreferences.currentVibrate) {
+            MODE_VIBRATE_1 -> {
+                binding.tvVibrate.text = "Strong"
+            }
+
+            MODE_VIBRATE_2 -> {
+                binding.tvVibrate.text = "Heart"
+            }
+
+            MODE_VIBRATE_3 -> {
+                binding.tvVibrate.text = "TickTok"
+            }
+        }
+
     }
 
     override fun onDestroy() {

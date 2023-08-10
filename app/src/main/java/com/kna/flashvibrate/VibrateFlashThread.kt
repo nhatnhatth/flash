@@ -6,13 +6,74 @@ import android.hardware.camera2.CameraManager
 import android.os.Vibrator
 import androidx.appcompat.app.AppCompatActivity
 
-class VibrateFlashThread(
-    private var context: Context,
-    private var mode: Int,
-    private var duration: Int,
-    private var delay: Int
-) :
-    Thread() {
+class VibrateFlashThread :
+    Thread {
+    private lateinit var context: Context
+    private var mode: Int = 0
+    private var duration: Int = 0
+    private var delay: Int = 0
+
+    constructor(
+        context: Context,
+        mode: Int,
+        duration: Int,
+        delay: Int
+    ) {
+        this.context = context
+        this.mode = mode
+        this.duration = duration
+        this.delay = delay
+    }
+
+    // Constructor 2
+    constructor(
+        context: Context,
+        modeCode: Int
+    ) {
+        this.context = context
+        when (modeCode) {
+            MODE_FLASH_1 -> {
+                this.mode = FLASH_MODE
+                this.duration = 600
+                this.delay = 0
+            }
+
+            MODE_FLASH_2 -> {
+                this.mode = FLASH_MODE
+                this.duration = 100
+                this.delay = 0
+            }
+
+            MODE_VIBRATE_1 -> {
+                this.mode = VIBRATE_MODE
+                this.duration = 6000
+                this.delay = 0
+            }
+
+            MODE_VIBRATE_2 -> {
+                this.mode = VIBRATE_MODE
+                this.duration = 150
+                this.delay = 700
+            }
+
+            MODE_VIBRATE_3 -> {
+                this.mode = VIBRATE_MODE
+                this.duration = 100
+                this.delay = 1000
+            }
+        }
+
+        when (mode) {
+            VIBRATE_MODE -> {
+                AppPreferences.instance.currentVibrate = modeCode
+            }
+
+            FLASH_MODE -> {
+                AppPreferences.instance.currentFlash = modeCode
+            }
+        }
+
+    }
 
     companion object {
         private lateinit var vibrator: Vibrator
