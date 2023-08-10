@@ -6,11 +6,17 @@ import android.hardware.camera2.CameraManager
 import android.os.Vibrator
 import androidx.appcompat.app.AppCompatActivity
 
-class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int, var delay: Int) :
+class VibrateFlashThread(
+    private var context: Context,
+    private var mode: Int,
+    private var duration: Int,
+    private var delay: Int
+) :
     Thread() {
 
     companion object {
-        lateinit var vibrator: Vibrator
+        private lateinit var vibrator: Vibrator
+        private lateinit var manager: CameraManager
         fun stopAll() {
             stopVibrate()
             stopFlash()
@@ -22,6 +28,8 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
         }
 
         fun stopFlash() {
+            var cameraId = manager!!.cameraIdList[0]
+            cameraId?.let { manager.setTorchMode(it, false) }
             isRunningFlash = false
         }
 
