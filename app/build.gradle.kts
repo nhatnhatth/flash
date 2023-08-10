@@ -50,4 +50,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.writingminds:FFmpegAndroid:0.3.2")
+    implementation ("org.jcodec:jcodec-android:0.1.9")
+    implementation ("com.arthenica:mobile-ffmpeg-full:4.3.1.LTS")
+    implementation ("com.github.lincollincol:AudioTool:1.2.1")
 }
