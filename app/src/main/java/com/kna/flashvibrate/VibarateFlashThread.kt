@@ -15,10 +15,12 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
             stopVibrate()
             stopFlash()
         }
+
         fun stopVibrate() {
             vibrator.cancel()
             isRunningVibrate = false
         }
+
         fun stopFlash() {
             isRunningFlash = false
         }
@@ -33,7 +35,7 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
     override fun run() {
         if (mode == FLASH_MODE) {
             if (isRunningFlash) {
-                isRunningFlash = false
+                stopFlash()
                 sleep(100)
                 doAction()
             } else {
@@ -41,7 +43,7 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
             }
         } else {
             if (isRunningVibrate) {
-                isRunningVibrate = false
+                stopVibrate()
                 sleep(100)
                 doAction()
             } else {
@@ -56,7 +58,7 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
             isRunningVibrate = true
             vibrate()
         } else if (mode == FLASH_MODE) {
-            isRunningFlash= true
+            isRunningFlash = true
             switchFlash()
         }
     }
@@ -65,7 +67,7 @@ class VibarateFlashThread(var context: Context, var mode: Int, var duration: Int
         var manager = context.getSystemService(AppCompatActivity.CAMERA_SERVICE) as CameraManager
         var cameraId = manager!!.cameraIdList[0]
         try {
-            for (i in 0 until durationSum / duration) {
+            for (i in 0 until durationSum / 2 / duration) {
                 cameraId?.let { manager.setTorchMode(it, true) }
                 if (!startSleep(duration)) {
                     cameraId?.let { manager.setTorchMode(it, false) }

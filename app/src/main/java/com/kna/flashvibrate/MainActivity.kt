@@ -5,6 +5,7 @@ import android.hardware.camera2.CameraManager
 import android.nfc.Tag
 import android.os.Bundle
 import android.os.Vibrator
+import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
@@ -39,19 +40,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btn1.setOnClickListener {
-            switchFlashLight(600)
+            AudioUtil.cutAudio(this, 5, 10, "/storage/emulated/0/Music/Recordings/Standard Recordings/persona 5.mp3", {
+                Log.e("nnnnnnnnnnnnnn", it)
+            })
         }
         binding.btn2.setOnClickListener {
-            switchFlashLight(100)
         }
         binding.btn3.setOnClickListener {
-            vibrate(700, 150)
         }
         binding.btn4.setOnClickListener {
-            vibrate(0, 1500)
         }
         binding.btn5.setOnClickListener {
-            vibrate(1000, 100)
         }
         binding.btn6.setOnClickListener {
             VibarateFlashThread(this, VibarateFlashThread.VIBRATE_MODE, 6000, 0).start()
@@ -85,48 +84,5 @@ class MainActivity : AppCompatActivity() {
             VibarateFlashThread.stopAll()
             vibrator.vibrate(0)
         }
-    }
-
-    private fun stopThread() {
-    }
-
-    private fun vibrate(h: Int, x: Int) {
-        isRunning = true
-        thread = Thread {
-            try {
-                if (h == 0) {
-                    vibrator.vibrate(x.toLong())
-                } else {
-                    for (i in 0..9) {
-                        vibrator.vibrate(x.toLong())
-                        Thread.sleep((h + x).toLong())
-                    }
-                }
-                isChecked = !isChecked
-            } catch (e: InterruptedException) {
-                throw RuntimeException(e)
-            }
-        }
-        thread.start()
-    }
-
-    private fun switchFlashLight(h: Int) {
-        isRunning = true
-        thread = Thread {
-            try {
-                for (i in 0 until 6000 / h) {
-                    cameraId?.let { manager.setTorchMode(it, true) }
-                    Thread.sleep(h.toLong())
-                    cameraId?.let { manager.setTorchMode(it, false) }
-                    Thread.sleep(h.toLong())
-                }
-                isChecked = !isChecked
-            } catch (e: CameraAccessException) {
-                e.printStackTrace()
-            } catch (e: InterruptedException) {
-                throw RuntimeException(e)
-            }
-        }
-        thread.start()
     }
 }
