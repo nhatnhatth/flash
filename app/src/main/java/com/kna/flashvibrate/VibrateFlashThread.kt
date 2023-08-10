@@ -84,14 +84,20 @@ class VibrateFlashThread :
         }
 
         fun stopVibrate() {
-            vibrator.cancel()
-            isRunningVibrate = false
+            if (isRunningVibrate) {
+                vibrator.cancel()
+                isRunningVibrate = false
+            }
+
         }
 
         fun stopFlash() {
-            var cameraId = manager!!.cameraIdList[0]
-            cameraId?.let { manager.setTorchMode(it, false) }
-            isRunningFlash = false
+            if (isRunningFlash) {
+                val cameraId = manager.cameraIdList[0]
+                cameraId?.let { manager.setTorchMode(it, false) }
+                isRunningFlash = false
+            }
+
         }
 
         const val VIBRATE_MODE = 124
@@ -133,7 +139,7 @@ class VibrateFlashThread :
     }
 
     private fun switchFlash() {
-        var manager = context.getSystemService(AppCompatActivity.CAMERA_SERVICE) as CameraManager
+        manager = context.getSystemService(AppCompatActivity.CAMERA_SERVICE) as CameraManager
         var cameraId = manager!!.cameraIdList[0]
         try {
             for (i in 0 until durationSum / 2 / duration) {
