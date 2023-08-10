@@ -4,6 +4,7 @@ import android.content.Intent
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
+import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
@@ -46,8 +47,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.btn2.setOnClickListener {
+            RecordUtil.startRecord(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/new_record3.mp3")
         }
         binding.btn3.setOnClickListener {
+            RecordUtil.stopRecording()
         }
         binding.btn4.setOnClickListener {
         }
