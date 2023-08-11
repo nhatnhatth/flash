@@ -10,7 +10,7 @@ import java.time.Duration
 
 object AudioUtil {
     fun cutAudio( context: Context, start: Int, duration: Int, path: String, callback: (outputPath: String) -> Unit) {
-        var outputPath = File(path).parent + "/clone_audio3.mp3"
+        var outputPath = File(path).parent + "/clone_audio4.mp3"
         AudioTool.getInstance(context)
             .withAudio(File(path))
             .cutAudio(start,duration) { callback.invoke(outputPath) }

@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appPreferences :AppPreferences
+    private var outputPath: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,20 +24,21 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btn1.setOnClickListener {
-            AudioUtil.cutAudio(
-                this,
-                5,
-                15,
-                "/storage/emulated/0/Download/Chua Bao Gio - Trung Quan.mp3"
-            ) {
-                Log.e("cut_audio", it)
+            if (PermissionUtils.checkReadPermission(this)) {
+                cutVideo()
+            } else {
+                PermissionUtils.requestReadPermission(this)
             }
         }
         binding.btn2.setOnClickListener {
-            RecordUtil.startRecord(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    .toString() + "/new_record3.mp3"
-            )
+            outputPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                .toString() + "/new_record4.mp3"
+            if (PermissionUtils.checkMicroPermission(this)) {
+                RecordUtil.startRecord(outputPath)
+            } else {
+                PermissionUtils.requestMicroPermission(this)
+            }
+
         }
         binding.btn3.setOnClickListener {
             RecordUtil.stopRecording()
@@ -82,6 +84,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun cutVideo() {
+        AudioUtil.cutAudio(
+            this,
+            5,
+            15,
+            "/storage/emulated/0/Download/Chua Bao Gio - Trung Quan.mp3"
+        ) {
+            Log.e("cut_audio", it)
+        }
+    }
+
     private fun autoText() {
         when (appPreferences.currentFlash) {
             MODE_FLASH_1 -> {
@@ -112,6 +125,27 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         RecordUtil.stopRecording()
         VibrateFlashThread.stopAll()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_READ_PERMISSION_CODE -> {
+                if (PermissionUtils.checkReadPermission(this)) {
+                    cutVideo()
+                }
+            }
+
+            REQUEST_MICRO_PERMISSION_CODE -> {
+                if (PermissionUtils.checkMicroPermission(this)) {
+                    RecordUtil.startRecord(outputPath)
+                }
+            }
+        }
     }
 
 }
