@@ -53,4 +53,7 @@ dependencies {
     implementation ("org.jcodec:jcodec-android:0.1.9")
     implementation ("com.arthenica:mobile-ffmpeg-full:4.3.1.LTS")
     implementation ("com.github.lincollincol:AudioTool:1.2.1")
+
+    implementation ("androidx.room:room-runtime:2.4.3")
+    annotationProcessor ("androidx.room:room-compiler:2.4.3")
 }

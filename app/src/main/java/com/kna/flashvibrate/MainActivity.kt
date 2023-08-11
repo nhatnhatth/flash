@@ -10,13 +10,11 @@ import com.kna.flashvibrate.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var appPreferences :AppPreferences
+    private var appPreferences = AppPreferences.instance
     private var outputPath: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppPreferences(applicationContext)
-        appPreferences = AppPreferences(applicationContext)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
