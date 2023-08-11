@@ -8,24 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 
 class VibrateFlashThread :
     Thread {
-    private lateinit var context: Context
+    private var context: Context
     private var mode: Int = 0
     private var duration: Int = 0
     private var delay: Int = 0
 
-    constructor(
-        context: Context,
-        mode: Int,
-        duration: Int,
-        delay: Int
-    ) {
-        this.context = context
-        this.mode = mode
-        this.duration = duration
-        this.delay = delay
-    }
-
-    // Constructor 2
     constructor(
         context: Context,
         modeCode: Int
@@ -78,6 +65,7 @@ class VibrateFlashThread :
     companion object {
         private lateinit var vibrator: Vibrator
         private lateinit var manager: CameraManager
+
         fun stopAll() {
             stopVibrate()
             stopFlash()
