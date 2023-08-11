@@ -7,6 +7,6 @@ class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         AppPreferences(this)
-        RoomDatabase.initDatabase(this)
+//        RoomDatabase.initDatabase(this)
     }
 }

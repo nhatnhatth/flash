@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btn1.setOnClickListener {
-            if (PermissionUtils.checkReadPermission(this)) {
+            if (PermissionUtils.checkReadAudioPermission(this)) {
                 cutVideo()
             } else {
-                PermissionUtils.requestReadPermission(this)
+                PermissionUtils.requestReadAudioPermission(this)
             }
         }
         binding.btn2.setOnClickListener {
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             this,
             5,
             15,
-            "/storage/emulated/0/Download/Chua Bao Gio - Trung Quan.mp3"
+            "/storage/emulated/0/Download/abc.mp3"
         ) {
             Log.e("cut_audio", it)
         }
@@ -133,7 +133,13 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_READ_PERMISSION_CODE -> {
-                if (PermissionUtils.checkReadPermission(this)) {
+                if (PermissionUtils.checkReadAudioPermission(this)) {
+                    cutVideo()
+                }
+            }
+
+            REQUEST_READ_AUDIO_PERMISSION_CODE -> {
+                if (PermissionUtils.checkReadAudioPermission(this)) {
                     cutVideo()
                 }
             }
